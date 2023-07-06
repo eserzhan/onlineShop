@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: qwerty
+  api:
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      - PORT=8080
+      - DATABASE_URL=db
+    depends_on:
+      - db
