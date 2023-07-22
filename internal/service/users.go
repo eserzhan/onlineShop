@@ -6,9 +6,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/eserzhan/onlineShop/internal/domain"
-	"github.com/eserzhan/onlineShop/internal/repository"
-	"github.com/eserzhan/onlineShop/pkg/auth"
+	"github.com/yervsil/onlineShop/internal/domain"
+	"github.com/yervsil/onlineShop/internal/repository"
+	"github.com/yervsil/onlineShop/pkg/auth"
 )
 
 const (

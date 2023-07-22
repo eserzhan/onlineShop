@@ -6,12 +6,14 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: qwerty
+    ports:
+      - 5432:5432
   api:
     build: .
     ports:
-      - 8080:8080
+      - 8000:8000
     environment:
-      - PORT=8080
+      - PORT=8000
       - DATABASE_URL=db
     depends_on:
       - db

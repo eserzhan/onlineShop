@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/jmoiron/sqlx"
-	"github.com/eserzhan/onlineShop/internal/domain"
+	"github.com/yervsil/onlineShop/internal/domain"
 )
 
 const (

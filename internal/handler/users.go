@@ -1,10 +1,9 @@
-package v1
+package handler
 
 import (
 	"net/http"
 
-	"github.com/eserzhan/onlineShop/internal/service"
-	"github.com/eserzhan/onlineShop/pkg/logger"
+	"github.com/yervsil/onlineShop/internal/service"
 	"github.com/gin-gonic/gin"
 )
 
@@ -80,7 +79,6 @@ func (h *Handler) userSignIn(c *gin.Context) {
 		Password: input.Password,
 	})
 	if err != nil {
-		logger.Error(err)
 		newResponse(c, http.StatusInternalServerError, err.Error())
 
 		return
@@ -106,7 +104,6 @@ func (h *Handler) userRefresh(c *gin.Context) {
 
 	res, err := h.services.Users.RefreshTokens(inp.Token)
 	if err != nil {
-		logger.Error(err)
 		newResponse(c, http.StatusInternalServerError, err.Error())
 
 		return
@@ -146,7 +143,6 @@ func (h *Handler) addToCart(c *gin.Context) {
 
 	err := h.services.Users.AddToCart(inp.Quantity, usrId, id)
 	if err != nil {
-		logger.Error(err)
 		newResponse(c, http.StatusInternalServerError, err.Error())
 
 		return
@@ -182,7 +178,6 @@ func (h *Handler) createOrder(c *gin.Context) {
 
 	orderID, err := h.services.Users.CreateOrder(usrId, inp.Delivery_method, inp.Payment_method)
 	if err != nil {
-		logger.Error(err)
 		newResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -205,7 +200,6 @@ func (h *Handler) orders(c *gin.Context) {
 
 	res, err := h.services.Users.GetOrders(usrId)
 	if err != nil {
-		logger.Error(err)
 		newResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
@@ -238,7 +232,6 @@ func (h *Handler) getOrderById(c *gin.Context){
 	res, err := h.services.Users.GetOrderById(usrid, lstId)
 
 	if err != nil {
-		logger.Error(err)
 		newResponse(c, http.StatusBadRequest, err.Error())
 		return 
 	}
@@ -263,7 +256,6 @@ func (h *Handler) getCart(c *gin.Context) {
 
 	res, err := h.services.Users.GetCart(usrId)
 	if err != nil {
-		logger.Error(err)
 		newResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}

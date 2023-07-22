@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/jmoiron/sqlx"
-	"github.com/eserzhan/onlineShop/internal/domain"
+	"github.com/yervsil/onlineShop/internal/domain"
 )
 
 // const (
@@ -17,7 +17,7 @@ type GeneralRepository struct {
 func(r *GeneralRepository) GetProduct() ([]domain.Product, error){
 	var Product []domain.Product
 
-	query := fmt.Sprintf("SELECT name, description, price, quantity FROM %s ", productsTable)
+	query := fmt.Sprintf("SELECT * FROM %s ", productsTable)
 
 	err := r.db.Select(&Product, query)
 

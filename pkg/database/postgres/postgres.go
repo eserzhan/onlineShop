@@ -6,7 +6,7 @@ import (
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
-	"github.com/eserzhan/onlineShop/internal/config"
+	"github.com/yervsil/onlineShop/internal/config"
 )
 
 

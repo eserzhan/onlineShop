@@ -1,13 +1,13 @@
-package v1
+package handler
 
 import (
 	//"net/http"
 
 	"net/http"
 
-	"github.com/eserzhan/onlineShop/internal/domain"
-	"github.com/eserzhan/onlineShop/internal/service"
-	"github.com/eserzhan/onlineShop/pkg/logger"
+	"github.com/yervsil/onlineShop/internal/domain"
+	"github.com/yervsil/onlineShop/internal/service"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -94,7 +94,6 @@ func (h *Handler) createProduct (c *gin.Context) {
 
 	res, err := h.services.Admins.CreateProduct(service.Product{Name: inp.Name, Description: inp.Description, Price: inp.Price, Quantity: inp.Quantity})
 	if err != nil {
-		logger.Error(err)
 		newResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -108,7 +107,6 @@ func (h *Handler) changeProduct(c *gin.Context) {
 
 	id := c.Param("id")
 	if err := c.BindJSON(&inp); err != nil {
-		logger.Error(err)
 		newResponse(c, http.StatusBadRequest, "invalid input body")
 		return
 	}
@@ -127,7 +125,6 @@ func (h *Handler) deleteProduct(c *gin.Context) {
 
 	err := h.services.Admins.DeleteProduct(id)
 	if err != nil {
-		logger.Error(err)
 		newResponse(c, http.StatusBadRequest, err.Error())
 		return 
 	}

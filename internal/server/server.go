@@ -4,8 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/eserzhan/onlineShop/internal/config"
-	//"github.com/zhashkevych/creatly-backend/internal/config"
+	"github.com/yervsil/onlineShop/internal/config"
 )
 
 type Server struct {

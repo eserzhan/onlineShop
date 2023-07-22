@@ -11,7 +11,7 @@ import (
 
 type (
 	Config struct {
-		Environment string
+		Env 		string 		`mapstructure:"env"`
 		HTTP        HTTPConfig
 		Postgres 	DB
 		Auth        AuthConfig
@@ -55,13 +55,17 @@ func InitConfig() (*Config, error) {
 	viper.AddConfigPath("../configs")
 	viper.SetConfigName("main")
 	// viper.AddConfigPath("/app/configs")
-	
+	// viper.SetConfigName("main")
 	// viper.SetConfigFile("main")
 	if err := viper.ReadInConfig(); err != nil {
 		return nil, err 
 	}
 
 	var cfg Config
+	if err := viper.UnmarshalKey("env", &cfg.Env); err != nil {
+		return nil, err 
+	}
+
 	if err := viper.UnmarshalKey("db", &cfg.Postgres); err != nil {
 		return nil, err 
 	}
@@ -89,6 +93,7 @@ func InitConfig() (*Config, error) {
 
 func parseEnv(cfg *Config) error {
 	err := godotenv.Load("../.env")
+	//err := godotenv.Load("/app/.env")
     if err != nil {
         log.Fatal("Error loading .env file")
     }

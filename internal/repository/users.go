@@ -6,8 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/eserzhan/onlineShop/internal/domain"
-	"github.com/eserzhan/onlineShop/pkg/logger"
+	"github.com/yervsil/onlineShop/internal/domain"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -87,7 +86,6 @@ func (r *UsersRepository) AddToCart(quantity int, userId, productId string) erro
 	row := r.db.QueryRow(inStockQuery, productId)
 	err := row.Scan(&product.Quantity)
 	if err != nil {
-		logger.Error(err)
 		return err 
 	}
 

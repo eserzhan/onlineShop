@@ -1,12 +1,11 @@
 package handler
 
 import (
-	"log"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/eserzhan/onlineShop/internal/handler/v1"
-	"github.com/eserzhan/onlineShop/internal/service"
-	"github.com/eserzhan/onlineShop/pkg/auth"
+	"github.com/yervsil/onlineShop/internal/service"
+	"github.com/yervsil/onlineShop/pkg/auth"
 )
 
 type Handler struct {
@@ -23,10 +22,7 @@ func NewHandler(services *service.Services, tokenManager auth.TokenManager) *Han
 
 
 func (h *Handler) InitRoutes() *gin.Engine {
-	// Init gin handler
 	router := gin.Default()
-
-
 
 	h.initAPI(router)
 
@@ -34,10 +30,46 @@ func (h *Handler) InitRoutes() *gin.Engine {
 }
 
 func (h *Handler) initAPI(router *gin.Engine) {
-	handlerV1 := v1.NewHandler(h.services, h.tokenManager)
-	log.Println(h.tokenManager)
+
 	api := router.Group("/api")
 	{
-		handlerV1.Init(api)
+		h.Init(api)
 	}
+}
+
+func (h *Handler) Init(api *gin.RouterGroup) {
+	v1 := api.Group("/v1")
+	{
+		h.initUsersRoutes(v1)
+		h.initAdminRoutes(v1)
+
+		v1.GET("/products", h.getProducts)
+		v1.GET("/products/:id", h.getProductById)
+	}
+}
+
+func (h *Handler) getProducts(c *gin.Context) {
+	res, err := h.services.GetProduct()
+	if err != nil {
+		newResponse(c, http.StatusBadRequest, err.Error())
+		return 
+	}
+
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"list": res,
+	})
+}
+
+func (h *Handler) getProductById(c *gin.Context) {
+	id := c.Param("id")
+
+	res, err := h.services.GetProductById(id)
+	if err != nil {
+		newResponse(c, http.StatusBadRequest, err.Error())
+		return 
+	}
+
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"item": res,
+	})
 }
